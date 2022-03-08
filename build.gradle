@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath "net.serenity-bdd:serenity-gradle-plugin:3.2.0"
+        classpath("net.serenity-bdd:serenity-single-page-report:3.2.0")
     }
 }
 
@@ -22,8 +23,8 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 ext {
     slf4jVersion = '1.7.7'
@@ -37,11 +38,17 @@ ext {
 dependencies {
     testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
             "net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-reports:${serenityCoreVersion}",
             "org.junit.jupiter:junit-jupiter-api:${junitVersion}",
             "org.junit.jupiter:junit-jupiter-engine:${junitVersion}",
             "org.assertj:assertj-core:${assertJVersion}",
             "org.projectlombok:lombok:${lombokVersion}",
             "ch.qos.logback:logback-classic:${logbackVersion}"
+}
+
+clean {
+    delete 'target'
 }
 
 test {
@@ -56,7 +63,7 @@ serenity {
     reports = ["single-page-html"]
 
     // Specify the root package of any JUnit acceptance tests
-    testRoot="starter"
+    testRoot="chargebee"
 
     // Specify the root directory of any Cucumber feature files
     requirementsDir = "src/test/resources/features"
